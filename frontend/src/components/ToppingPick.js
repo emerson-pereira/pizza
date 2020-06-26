@@ -16,6 +16,10 @@ const nextStep = {
 
 const ToppingPick = () => {
   const [toppings, setToppings] = useState([]);
+  const [special, setSpecial] = useState({
+    day: null,
+    topping: "",
+  });
   const { pizza, handleSelectChange } = useContext(pizzaContext);
 
   useEffect(() => {
@@ -23,6 +27,27 @@ const ToppingPick = () => {
       .then((res) => res.json())
       .then((toppings) => setToppings(toppings));
   }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/toppings/special")
+      .then((res) => res.json())
+      .then(({ topping, day }) => setSpecial({ topping, day }));
+  }, []);
+
+  const IsSpecial = (topping) => topping === special.topping;
+
+  const dayOfTheWeek = (dayIndex) => {
+    const names = [
+      "Domingo",
+      "Segunda",
+      "Terça",
+      "Quarta",
+      "Quinta",
+      "Sexta",
+      "Sábado",
+    ];
+    return names[dayIndex] || "";
+  };
 
   return (
     <>
@@ -34,7 +59,10 @@ const ToppingPick = () => {
       >
         <option value="">Selecione uma opção</option>
         {toppings.map((topping) => (
-          <option value={topping}>{topping}</option>
+          <option value={topping}>
+            {topping}{" "}
+            {IsSpecial(topping) && `(Especial de ${dayOfTheWeek(special.day)})`}
+          </option>
         ))}
       </Select>
 
