@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Stepper from "./Stepper";
 import Subtitle from "./styles/Subtitle";
 import Select from "./styles/Select";
@@ -15,7 +15,14 @@ const nextStep = {
 };
 
 const ToppingPick = () => {
+  const [toppings, setToppings] = useState([]);
   const { pizza, handleSelectChange } = useContext(pizzaContext);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/toppings")
+      .then((res) => res.json())
+      .then((toppings) => setToppings(toppings));
+  }, []);
 
   return (
     <>
@@ -26,9 +33,9 @@ const ToppingPick = () => {
         onChange={handleSelectChange}
       >
         <option value="">Selecione uma opção</option>
-        <option value="Cheese">Cheese</option>
-        <option value="Pepperoni">Pepperoni</option>
-        <option value="Margherita">Margherita</option>
+        {toppings.map((topping) => (
+          <option value={topping}>{topping}</option>
+        ))}
       </Select>
 
       <Stepper
