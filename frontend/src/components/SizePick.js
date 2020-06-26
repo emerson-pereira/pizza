@@ -28,7 +28,11 @@ const SizePick = () => {
         <option value="X-Large">X-Large</option>
       </Select>
 
-      <Stepper previousStep={previousStep} nextStep={nextStep} />
+      <Stepper
+        previousStep={previousStep}
+        nextStep={nextStep}
+        hasValidValue={!!pizza.size}
+      />
     </>
   );
 };

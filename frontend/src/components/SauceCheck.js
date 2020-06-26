@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Stepper from "./Stepper";
 import Subtitle from "./styles/Subtitle";
+import Checkbox from "./styles/Checkbox";
 import pizzaContext from "../pizzaContext";
 
 const previousStep = {
@@ -19,12 +20,16 @@ const SauceCheck = () => {
   return (
     <>
       <Subtitle>Confirme o molho</Subtitle>
-      <input
-        type="checkbox"
-        name="sauce"
-        checked={pizza.sauce}
-        onChange={handleCheckboxToggle}
-      />
+
+      <label htmlFor="sauce">
+        Deseja molho de tomate?
+        <Checkbox
+          name="sauce"
+          id="sauce"
+          checked={pizza.sauce}
+          onChange={handleCheckboxToggle}
+        />
+      </label>
 
       <Stepper previousStep={previousStep} nextStep={nextStep} />
     </>

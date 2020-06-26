@@ -31,7 +31,11 @@ const ToppingPick = () => {
         <option value="Margherita">Margherita</option>
       </Select>
 
-      <Stepper previousStep={previousStep} nextStep={nextStep} />
+      <Stepper
+        previousStep={previousStep}
+        nextStep={nextStep}
+        hasValidValue={!!pizza.topping}
+      />
     </>
   );
 };

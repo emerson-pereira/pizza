@@ -1,7 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Button from "./styles/Button";
+import pizzaContext from "../pizzaContext";
 
 const StyledStepper = styled.section`
   display: flex;
@@ -24,19 +25,27 @@ const StyledStepper = styled.section`
   }}
 `;
 
-const Stepper = ({ previousStep, nextStep }) => (
-  <StyledStepper hasPreviousStep={!!previousStep} hasNextStep={!!nextStep}>
-    {previousStep && (
-      <Link to={previousStep.route}>
-        <Button secondary>{previousStep.text}</Button>
-      </Link>
-    )}
-    {nextStep && (
-      <Link to={nextStep.route}>
-        <Button primary>{nextStep.text}</Button>
-      </Link>
-    )}
-  </StyledStepper>
-);
+const Stepper = ({ previousStep, nextStep, hasValidValue = true }) => {
+  const history = useHistory();
 
+  const handleNextStepClick = () => {
+    hasValidValue && history.push(nextStep.route);
+    !hasValidValue && alert("Escolha uma opção antes de prosseguir");
+  };
+
+  return (
+    <StyledStepper hasPreviousStep={!!previousStep} hasNextStep={!!nextStep}>
+      {previousStep && (
+        <Link to={previousStep.route}>
+          <Button secondary>{previousStep.text}</Button>
+        </Link>
+      )}
+      {nextStep && (
+        <Button primary onClick={handleNextStepClick}>
+          {nextStep.text}
+        </Button>
+      )}
+    </StyledStepper>
+  );
+};
 export default Stepper;

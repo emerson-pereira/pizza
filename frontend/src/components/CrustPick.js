@@ -22,7 +22,7 @@ const CrustPick = () => {
         <option value="Cheese">Cheese</option>
       </Select>
 
-      <Stepper nextStep={nextStep} />
+      <Stepper nextStep={nextStep} hasValidValue={!!pizza.crust} />
     </>
   );
 };
